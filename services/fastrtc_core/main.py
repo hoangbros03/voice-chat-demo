@@ -1,15 +1,13 @@
+from __future__ import annotations
+
 from fastrtc import Stream
-import numpy as np
-
-
-def flip_vertically(image):
-    return np.flip(image, axis=0)
+from handler import AsyncEchoHandler
 
 stream = Stream(
-    handler=flip_vertically,
-    modality="video",
-    mode="send-receive",
+    handler=AsyncEchoHandler(),
+    modality='audio',
+    mode='send-receive',
 )
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     stream.ui.launch()

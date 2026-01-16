@@ -6,5 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastrtc>=0.0.34",
+    "langgraph>=1.0.6",
     "numpy>=2.3.5",
+    "pydub>=0.25.1",
 ]
