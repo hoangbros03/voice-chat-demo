@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 import numpy as np
+
+logging.basicConfig(level=logging.INFO)
 
 
 async def simple_llm_handler(
@@ -14,6 +17,7 @@ async def simple_llm_handler(
 ):
     # Step 1: Speech-to-Text
     transcription = stt_model.stt(audio)
+    logging.info(f"Transcription: {transcription}")
 
     # Step 2: Process with Agent Graph multi-turn
     initial_state = {

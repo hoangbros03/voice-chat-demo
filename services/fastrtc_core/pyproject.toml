@@ -12,3 +12,8 @@ dependencies = [
     "openai>=2.15.0",
     "pydub>=0.25.1",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+]

@@ -1,16 +1,13 @@
 from __future__ import annotations
 
 from agents.graph_builder import get_compiled_graph
-from fastrtc import ReplyOnPause
-from fastrtc import Stream
-from streams.handler import simple_llm_handler
+from streams import ReplyOnPauseStream as Stream
 
 graph = get_compiled_graph()
 
 stream = Stream(
-    handler=ReplyOnPause(simple_llm_handler),
-    modality='audio',
-    mode='send-receive',
+    handler_name='simple_llm',
+    agent_graph=graph,
 )
 
 if __name__ == '__main__':
