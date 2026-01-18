@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from fastrtc import Stream
-from handler import AsyncEchoHandler
+from agents.graph_builder import get_compiled_graph
+from streams import ReplyOnPauseStream as Stream
+
+graph = get_compiled_graph()
 
 stream = Stream(
-    handler=AsyncEchoHandler(),
-    modality='audio',
-    mode='send-receive',
+    handler_name='simple_llm',
+    agent_graph=graph,
 )
 
 if __name__ == '__main__':
