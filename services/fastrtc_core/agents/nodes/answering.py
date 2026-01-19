@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from agents.nodes.base import BaseNode
+from agents.prompts.answering import ANSWERING_SYSTEM_PROMPT
 from agents.state import State
 from openai_client.client import OpenAIClient
 
@@ -16,8 +17,14 @@ class AnsweringNode(BaseNode):
         # Get all messages from state (includes history)
         messages = state.messages
 
+        # Prepend system prompt
+        full_messages = [{
+            'role': 'system',
+            'content': ANSWERING_SYSTEM_PROMPT,
+        }] + messages
+
         # Call OpenAI with full conversation history
-        response = self.openai_client.completions(messages)
+        response = self.openai_client.completions(full_messages)
 
         # Append assistant response
         updated_messages = messages + [{

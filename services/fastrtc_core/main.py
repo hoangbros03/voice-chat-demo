@@ -6,7 +6,7 @@ from streams import ReplyOnPauseStream as Stream
 graph = get_compiled_graph()
 
 stream = Stream(
-    handler_name='simple_llm',
+    handler_name='llm_with_waiting_time',
     agent_graph=graph,
 )
 
