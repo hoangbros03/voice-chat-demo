@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import logging
 import os
+import sys
 
 from openai import OpenAI
 from settings import Settings
+sys.path.append('../settings')
+
 
 logging.basicConfig(level=logging.INFO)
 settings = Settings()

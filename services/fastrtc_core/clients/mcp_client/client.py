@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import sys
+
 from mcp import Client
 from settings import Settings
+sys.path.append('../settings')
+
 
 settings = Settings()
 
