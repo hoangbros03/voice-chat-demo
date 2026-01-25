@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WebRTC Audio Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    button { font-size: 16px; padding: 10px 20px; }
+    #status { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>WebRTC Audio Test</h2>
+<button id="start">Start Mic</button>
+<div id="status">Idle</div>
+
+<script>
+let pc;
+let audioEl;
+
+function log(msg) {
+  document.getElementById("status").innerText = msg;
+  console.log(msg);
+}
+
+document.getElementById("start").onclick = async () => {
+  log("Requesting microphone...");
+
+  // 1. Create PeerConnection
+  pc = new RTCPeerConnection({
+    iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+  });
+
+  pc.onconnectionstatechange = () => {
+    log("Connection: " + pc.connectionState);
+  };
+
+  // 2. Play audio coming back from server
+  pc.ontrack = (e) => {
+    log("Received audio track");
+    audioEl = document.createElement("audio");
+    audioEl.srcObject = e.streams[0];
+    audioEl.autoplay = true;
+    audioEl.controls = true;
+    document.body.appendChild(audioEl);
+  };
+
+  // 3. Get mic
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  stream.getTracks().forEach(track => pc.addTrack(track, stream));
+  log("Microphone added");
+
+  // 4. Create offer
+  const offer = await pc.createOffer();
+  await pc.setLocalDescription(offer);
+
+  // 5. Send offer to backend
+  log("Sending offer...");
+  const res = await fetch("https://turbo-space-waffle-5p4774x6wpp345gv-8000.app.github.dev/voice/webrtc/offer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sdp: offer.sdp,
+      type: offer.type
+    })
+  });
+
+  if (!res.ok) {
+    log("Server error: " + res.status);
+    return;
+  }
+
+  const answer = await res.json();
+
+  // 6. Set answer
+  await pc.setRemoteDescription(answer);
+  log("Answer set, waiting for audio...");
+};
+</script>
+
+</body>
+</html>

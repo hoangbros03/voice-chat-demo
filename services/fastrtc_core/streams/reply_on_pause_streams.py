@@ -5,6 +5,7 @@ from typing import Any
 import numpy as np
 from fastrtc import get_stt_model
 from fastrtc import get_tts_model
+from fastrtc import ReplyOnPause
 from fastrtc import Stream
 from streams.handler import HANDLER_FUNCTIONS
 from streams.handler import HandlerType
@@ -33,7 +34,7 @@ class ReplyOnPauseStream(Stream):
         )
 
         super().__init__(
-            handler=self.handler,
+            handler=ReplyOnPause(self.handler),
             modality='audio',
             mode='send-receive',
         )

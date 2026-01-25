@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 import logging
-import os
+import sys
+sys.path.append('../settings')
 
 import requests
 from crawl4ai import AsyncWebCrawler
-from dotenv import load_dotenv
 from fastmcp import FastMCP
+from settings import Settings
 
 logging.basicConfig(level=logging.INFO)
-load_dotenv()
+settings = Settings()
 mcp = FastMCP('web-tools')
 
 
@@ -24,7 +25,7 @@ def web_search(query: str, k: int = 5) -> list[dict]:
         },
         headers={
             'Accept': 'application/json',
-            'Authorization': 'Bearer ' + os.getenv('SEARCH__API_KEY', ''),
+            'Authorization': 'Bearer ' + settings.search.key,
         },
     )
     data = resp.json()

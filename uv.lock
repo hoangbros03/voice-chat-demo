@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -11,6 +11,7 @@ resolution-markers = [
 members = [
     "fastrtc-core",
     "mcp-server",
+    "settings",
     "voice-chat-demo",
 ]
 
@@ -1053,6 +1054,7 @@ dependencies = [
     { name = "numpy" },
     { name = "openai" },
     { name = "pydub" },
+    { name = "settings" },
 ]
 
 [package.dev-dependencies]
@@ -1068,6 +1070,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.3.5" },
     { name = "openai", specifier = ">=2.15.0" },
     { name = "pydub", specifier = ">=0.25.1" },
+    { name = "settings", editable = "services/settings" },
 ]
 
 [package.metadata.requires-dev]
@@ -2252,6 +2255,8 @@ dependencies = [
     { name = "crawl4ai" },
     { name = "dotenv" },
     { name = "fastmcp" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
 ]
 
 [package.dev-dependencies]
@@ -2265,6 +2270,8 @@ requires-dist = [
     { name = "crawl4ai", specifier = ">=0.8.0" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "fastmcp", specifier = ">=2.3.0rc1" },
+    { name = "pydantic", specifier = ">=2.12.3" },
+    { name = "pydantic-settings", specifier = ">=2.12.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -4084,6 +4091,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/7d/31/f2289ce78b9b473d582568c234e104d2a342fd658cc288a7553d83bb8595/semantic_version-2.10.0.tar.gz", hash = "sha256:bdabb6d336998cbb378d4b9db3a4b56a1e3235701dc05ea2690d9a997ed5041c", size = 52289, upload-time = "2022-05-26T13:35:23.454Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6a/23/8146aad7d88f4fcb3a6218f41a60f6c2d4e3a72de72da1825dc7c8f7877c/semantic_version-2.10.0-py2.py3-none-any.whl", hash = "sha256:de78a3b8e0feda74cabc54aab2da702113e33ac9d9eb9d2389bcf1f58b7d9177", size = 15552, upload-time = "2022-05-26T13:35:21.206Z" },
+]
+
+[[package]]
+name = "settings"
+version = "0.1.0"
+source = { editable = "services/settings" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.12.3" },
+    { name = "pydantic-settings", specifier = ">=2.12.0" },
 ]
 
 [[package]]
