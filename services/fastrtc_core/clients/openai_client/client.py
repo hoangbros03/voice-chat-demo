@@ -3,12 +3,8 @@ from settings import Settings
 
 import logging
 import os
-import sys
 
 from openai import OpenAI
-
-sys.path.append('../settings')  # ignore: noqa
-
 
 logging.basicConfig(level=logging.INFO)
 settings = Settings()

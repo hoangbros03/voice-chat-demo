@@ -19,7 +19,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black>=26.1.0",
+    "sounddevice>=0.5.5",
 ]
 
 [tool.uv.sources]
-settings = { workspace = true, editable = true }
+settings = { workspace = true }

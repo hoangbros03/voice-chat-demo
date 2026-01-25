@@ -2,10 +2,6 @@ from __future__ import annotations
 from settings import Settings
 from fastmcp import Client
 
-import sys
-sys.path.append('../settings')
-
-
 settings = Settings()
 
 

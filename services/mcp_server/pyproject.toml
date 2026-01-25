@@ -10,6 +10,7 @@ dependencies = [
     "fastmcp>=2.3.0rc1",
     "pydantic>=2.12.3",
     "pydantic-settings>=2.12.0",
+    "settings",
 ]
 
 [dependency-groups]
@@ -17,3 +18,6 @@ dev = [
     "pytest>=9.0.2",
     "pytest-asyncio>=1.3.0",
 ]
+
+[tool.uv.sources]
+settings = { workspace = true }

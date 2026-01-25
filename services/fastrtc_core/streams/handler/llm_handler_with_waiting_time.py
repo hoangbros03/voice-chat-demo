@@ -49,6 +49,8 @@ async def llm_handler_with_waiting_time(
         ):
             yield audio_chunk
 
+        break
+
     # Extract assistant's response (last message)
     result = await llm_task
     response = result['messages'][-1]['content']

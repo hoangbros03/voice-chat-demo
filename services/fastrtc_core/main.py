@@ -1,14 +1,10 @@
 from __future__ import annotations
 
-import sys
-
 import uvicorn
 from agents.graph_builder import get_compiled_graph
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from streams import ReplyOnPauseStream as Stream
-sys.path.append('../settings')
-
 
 graph = get_compiled_graph()
 
@@ -51,3 +47,4 @@ stream.mount(app, path='/voice')
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)
+    # stream.ui.launch()

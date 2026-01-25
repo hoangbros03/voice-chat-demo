@@ -5,9 +5,6 @@ from crawl4ai import AsyncWebCrawler
 import requests
 
 import logging
-import sys
-sys.path.append('../settings')  # ignore: noqa
-
 
 logging.basicConfig(level=logging.INFO)
 settings = Settings()
