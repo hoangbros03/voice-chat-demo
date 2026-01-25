@@ -17,9 +17,14 @@ class SearchAPISettings(BaseModel):
     key: str
 
 
+class MCPSettings(BaseModel):
+    server_url: str = ''
+
+
 class Settings(BaseSettings):
     openai_api: OpenAISettings
     search: SearchAPISettings
+    mcp: MCPSettings
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file='../../.env',

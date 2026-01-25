@@ -10,7 +10,7 @@ async def main():
     # FastMCP Client automatically manages the connection and infers
     # the transport (Stdio) from the file extension (.py).
     # server = FastMCP("web-tools")
-    client = Client('http://127.0.0.1:8000/mcp')
+    client = Client('http://127.0.0.1:8001/mcp')
     async with client:
         tools = await client.list_tools()
         print('Available tools:', tools)
@@ -20,10 +20,12 @@ async def main():
             {'query': 'MCP protocol', 'k': 2},
         )
 
+        print(search_result)
+
         # FastMCP returns raw MCP content (usually JSON text for complex data),
         # so we parse it to get the list of results.
         results = json.loads(search_result.content[0].text)
-        url = results[0]['url']
+        url = results['result'][0]['url']
 
         # 2. Crawl: Call the tool with the extracted URL
         crawl_result = await client.call_tool(

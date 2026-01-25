@@ -1,9 +1,8 @@
 from __future__ import annotations
+from settings import Settings
+from fastmcp import Client
 
 import sys
-
-from mcp import Client
-from settings import Settings
 sys.path.append('../settings')
 
 
@@ -20,4 +19,4 @@ class MCPClient:
         if hasattr(self, '_initialized'):
             return
         self._initialized = True
-        self.client = Client(server_url=settings.mcp.server_url)
+        self.client = Client(settings.mcp.server_url)

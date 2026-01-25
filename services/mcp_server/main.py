@@ -1,13 +1,12 @@
 from __future__ import annotations
+from settings import Settings
+from fastmcp import FastMCP
+from crawl4ai import AsyncWebCrawler
+import requests
 
 import logging
 import sys
-
-import requests
-from crawl4ai import AsyncWebCrawler
-from fastmcp import FastMCP
-from settings import Settings
-sys.path.append('../settings')
+sys.path.append('../settings')  # ignore: noqa
 
 
 logging.basicConfig(level=logging.INFO)
@@ -16,7 +15,7 @@ mcp = FastMCP('web-tools')
 
 
 @mcp.tool(name='web_search', description='Search the web for information.')
-def web_search(query: str, k: int = 5) -> list[dict]:
+def web_search(query: str, k: int = 5) -> dict:
     """Search the web and return top results"""
     resp = requests.post(
         'https://api.tavily.com/search',
@@ -30,10 +29,12 @@ def web_search(query: str, k: int = 5) -> list[dict]:
         },
     )
     data = resp.json()
-    return [
-        {'title': r['title'], 'url': r['url'], 'content': r['content']}
-        for r in data['results']
-    ]
+    return {
+        'result': [
+            {'title': r['title'], 'url': r['url'], 'content': r['content']}
+            for r in data['results']
+        ],
+    }
 
 
 @mcp.tool(name='web_crawl', description='Get the content of a web page.')
@@ -45,3 +46,7 @@ async def web_crawl(url: str):
         except Exception:
             logging.error(f"Failed to extract content from {url}")
             return ''
+
+
+if __name__ == '__main__':
+    mcp.run(transport='http', host='127.0.0.1', port=8001)

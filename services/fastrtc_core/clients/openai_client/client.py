@@ -1,12 +1,13 @@
 from __future__ import annotations
+from settings import Settings
 
 import logging
 import os
 import sys
 
 from openai import OpenAI
-from settings import Settings
-sys.path.append('../settings')
+
+sys.path.append('../settings')  # ignore: noqa
 
 
 logging.basicConfig(level=logging.INFO)
