@@ -7,12 +7,13 @@ from fastrtc import get_stt_model
 from fastrtc import get_tts_model
 from fastrtc import ReplyOnPause
 from fastrtc import Stream
-from streams.handler.simple_llm_handler import simple_llm_handler
+from streams.handler import HANDLER_FUNCTIONS
+from streams.handler import HandlerType
 
 
 class ReplyOnPauseStream(Stream):
     def __init__(
-        self, handler_name: str = 'default', agent_graph: Any = None,
+        self, handler_name: str = 'simple_llm', agent_graph: Any = None,
     ) -> None:
         self.stt_model = get_stt_model()
         self.tts_model = get_tts_model()
@@ -24,13 +25,16 @@ class ReplyOnPauseStream(Stream):
         self.thread_id = (
             'default_thread'  # For multi-turn conversation tracking
         )
-        if handler_name == 'simple_llm':
-            handler = ReplyOnPause(self.simple_llm_handler)
-        else:
-            handler = ReplyOnPause(self.echo)
+
+        self.handler_func = HANDLER_FUNCTIONS.get(
+            HandlerType(handler_name), None,
+        )
+        assert self.handler_func is not None, (
+            f'Handler function for {handler_name} not found.'
+        )
 
         super().__init__(
-            handler=handler,
+            handler=ReplyOnPause(self.handler),
             modality='audio',
             mode='send-receive',
         )
@@ -40,11 +44,12 @@ class ReplyOnPauseStream(Stream):
         async for audio_chunk in self.tts_model.stream_tts(transcription):
             yield audio_chunk
 
-    async def simple_llm_handler(
+    async def handler(
         self,
         audio: tuple[int, np.ndarray],
     ):
-        async for audio_chunk in simple_llm_handler(
+        assert self.handler_func is not None  # for mypy
+        async for audio_chunk in self.handler_func(
             audio,
             self.stt_model,
             self.tts_model,

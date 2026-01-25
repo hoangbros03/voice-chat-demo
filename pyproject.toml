@@ -11,8 +11,9 @@ dependencies = [
 
 [tool.uv.workspace]
 members = [
-    "fastrtc_core",
     "services/fastrtc_core",
+    "services/mcp_server",
+    "services/settings",
 ]
 
 [dependency-groups]

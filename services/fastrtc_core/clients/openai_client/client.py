@@ -1,17 +1,13 @@
 from __future__ import annotations
+from settings import Settings
 
 import logging
 import os
 
-from dotenv import load_dotenv
 from openai import OpenAI
-load_dotenv()
-
 
 logging.basicConfig(level=logging.INFO)
-
-ENV_API_KEY = os.getenv('OPENAI_API_KEY')
-ENV_BASE_URL = os.getenv('OPENAI_API_BASE_URL')
+settings = Settings()
 
 
 class OpenAIClient:
@@ -26,10 +22,12 @@ class OpenAIClient:
         if hasattr(self, '_initialized'):
             return
         self._initialized = True
+        self.settings = settings.openai_api
 
         self.client = OpenAI(
-            base_url=base_url or ENV_BASE_URL or 'https://api.openai.com/v1',
-            api_key=api_key or ENV_API_KEY,
+            base_url=base_url or self.settings.base_url or
+            'https://api.openai.com/v1',
+            api_key=api_key or self.settings.key,
         )
         self.model = os.getenv('OPENAI_API_MODEL', model)
 

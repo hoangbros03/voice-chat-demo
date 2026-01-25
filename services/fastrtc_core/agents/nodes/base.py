@@ -15,3 +15,13 @@ class BaseNode(BaseModel):
     @abc.abstractmethod
     def execute(self, state: State) -> Any:
         pass
+
+
+class AsyncBaseNode(BaseModel):
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    @abc.abstractmethod
+    async def __call__(self, state: State) -> Any:
+        pass
