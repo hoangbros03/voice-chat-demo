@@ -8,6 +8,7 @@ dependencies = [
     "fastrtc[stt,vad]>=0.0.34",
     "kokoro-onnx>=0.4.9",
     "langgraph>=1.0.6",
+    "mcp>=1.25.0",
     "numpy>=2.3.5",
     "openai>=2.15.0",
     "pydub>=0.25.1",

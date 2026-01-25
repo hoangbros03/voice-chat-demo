@@ -1,11 +1,12 @@
 from __future__ import annotations
-from streams import ReplyOnPauseStream as Stream
-from agents.graph_builder import get_compiled_graph
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
-import uvicorn
 
 import sys
+
+import uvicorn
+from agents.graph_builder import get_compiled_graph
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from streams import ReplyOnPauseStream as Stream
 sys.path.append('../settings')
 
 

@@ -25,8 +25,8 @@ class OpenAIClient:
         self.settings = settings.openai_api
 
         self.client = OpenAI(
-            base_url=base_url or self.settings.base_url or \
-                'https://api.openai.com/v1',
+            base_url=base_url or self.settings.base_url or
+            'https://api.openai.com/v1',
             api_key=api_key or self.settings.key,
         )
         self.model = os.getenv('OPENAI_API_MODEL', model)

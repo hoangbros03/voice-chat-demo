@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import logging
 import sys
-sys.path.append('../settings')
 
 import requests
 from crawl4ai import AsyncWebCrawler
 from fastmcp import FastMCP
 from settings import Settings
+sys.path.append('../settings')
+
 
 logging.basicConfig(level=logging.INFO)
 settings = Settings()
