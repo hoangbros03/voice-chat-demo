@@ -35,14 +35,15 @@ cp .env.dev .env
 4. Run a service (from repo root or change into the service folder):
 
 ```powershell
-# Real-time core
-uv run python services\fastrtc_core\main.py
-
 # MCP server
-uv run python services\mcp_server\main.py
+cd services\mcp_server && uv run python main.py
 
 # Vector search (see services/vector_search/README.md for details)
-uv run python services\vector_search\main.py
+cd services\vector_search && uv run python main.py
+
+# Real-time core
+cd services\fastrtc_core && uv run python -m test.test_service # To run gradio that we can start talking directly 
+cd services\fastrtc_core && uv run main.py # or if you have a way to connect to this webrtc server
 ```
 
 ## Tests
