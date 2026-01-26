@@ -14,6 +14,8 @@ members = [
     "services/fastrtc_core",
     "services/mcp_server",
     "services/settings",
+    "services/vector_search",
+    "libs/settings",
 ]
 
 [dependency-groups]
