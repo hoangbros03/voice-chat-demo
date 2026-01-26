@@ -7,8 +7,11 @@ from fastrtc import get_stt_model
 from fastrtc import get_tts_model
 from fastrtc import ReplyOnPause
 from fastrtc import Stream
+from fastrtc import AlgoOptions
 from streams.handler import HANDLER_FUNCTIONS
 from streams.handler import HandlerType
+
+SPEECH_THRESHOLD = 0.3  # Higher = less sensitive to background noise
 
 
 class ReplyOnPauseStream(Stream):
@@ -33,8 +36,12 @@ class ReplyOnPauseStream(Stream):
             f'Handler function for {handler_name} not found.'
         )
 
+        vad_options = AlgoOptions(
+            speech_threshold=SPEECH_THRESHOLD,
+        )
+
         super().__init__(
-            handler=ReplyOnPause(self.handler),
+            handler=ReplyOnPause(self.handler, algo_options=vad_options),
             modality='audio',
             mode='send-receive',
         )
