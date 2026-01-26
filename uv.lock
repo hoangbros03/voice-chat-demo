@@ -5209,16 +5209,20 @@ name = "vector-search"
 version = "0.1.0"
 source = { virtual = "services/vector_search" }
 dependencies = [
+    { name = "fastapi" },
     { name = "pandas" },
     { name = "settings" },
     { name = "superlinked" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "fastapi", specifier = ">=0.128.0" },
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "settings", editable = "libs/settings" },
     { name = "superlinked", specifier = ">=37.5.0" },
+    { name = "uvicorn", specifier = ">=0.40.0" },
 ]
 
 [[package]]
