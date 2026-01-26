@@ -21,10 +21,15 @@ class MCPSettings(BaseModel):
     server_url: str = ''
 
 
+class DatasetSettings(BaseModel):
+    path: str
+
+
 class Settings(BaseSettings):
     openai_api: OpenAISettings
     search: SearchAPISettings
     mcp: MCPSettings
+    dataset: DatasetSettings
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file='../../.env',
