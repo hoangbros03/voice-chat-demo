@@ -1,9 +1,6 @@
-from agents.graph_builder import get_compiled_graph
 import asyncio
-import sys
 
-# ignore: noqa
-sys.path.append('/workspaces/voice-chat-demo/services/fastrtc_core')
+from agents.graph_builder import get_compiled_graph
 
 
 async def main():
