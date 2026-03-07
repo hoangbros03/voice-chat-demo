@@ -10,7 +10,27 @@ This repository contains multiple services used in the demo:
 - `services/mcp_server` — MCP signaling/server component used by clients and core services.
 - `services/vector_search` — semantic vector search (Superlinked) for National Olympic Committee (NOC) statistics.
 
-## Quick start (Windows PowerShell)
+## Quick start
+
+### Option 1: Using Docker (Recommended)
+
+Run all services with Docker Compose:
+
+```bash
+# Quick setup
+./docker-quickstart.sh
+
+# Or manually:
+make env           # Create .env.dev from .env.example
+make build         # Build Docker images
+make up-d          # Start services in background
+make logs          # View service logs
+make health        # Check service health
+```
+
+See [DOCKER_SETUP.md](DOCKER_SETUP.md) for detailed Docker documentation.
+
+### Option 2: Local Development (Windows PowerShell)
 
 1. Create and activate a virtual environment:
 
@@ -43,7 +63,7 @@ cd services\vector_search && uv run python main.py
 
 # Real-time core
 cd services\fastrtc_core && uv run python -m test.test_service # To run gradio that we can start talking directly 
-cd services\fastrtc_core && uv run main.py # or if you have a way to connect to this webrtc server
+cd services\fastrtc_core && uv run python main.py # or if you have a way to connect to this webrtc server
 ```
 
 ## Tests

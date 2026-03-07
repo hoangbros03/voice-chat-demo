@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # FastRTC Core Service - Main voice interaction service
+  fastrtc-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastrtc-core
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.dev
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MCP__SERVER_URL=http://mcp-server:8001
+    volumes:
+      - ./data:/app/data
+      - ./services/fastrtc_core/resources:/app/services/fastrtc_core/resources
+    command: |
+      python -m uvicorn services.fastrtc_core.main:app 
+      --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - mcp-server
+      - vector-search
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - voice-chat-network
+    restart: unless-stopped
+
+  # MCP Server - Web tools MCP server
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-server
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env.dev
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: |
+      python services/mcp_server/main.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - voice-chat-network
+    restart: unless-stopped
+
+  # Vector Search Service - NOC data search service
+  vector-search:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vector-search
+    ports:
+      - "8002:8002"
+    env_file:
+      - .env.dev
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+    command: |
+      python -m uvicorn services.vector_search.main:app 
+      --host 0.0.0.0 --port 8002 --reload
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - voice-chat-network
+    restart: unless-stopped
+
+networks:
+  voice-chat-network:
+    driver: bridge
